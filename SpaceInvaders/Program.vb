@@ -524,28 +524,36 @@
         Console.Clear()
 
         Console.SetCursorPosition(10, 7)
-        Console.WriteLine("  ___  ___  ___  ___   ___  _____ ")
-        Console.SetCursorPosition(10, 8)
-        Console.WriteLine(" / __||   ||  ||  _ \ | __||_   _|")
-        Console.SetCursorPosition(10, 9)
-        Console.WriteLine("| (_ || | ||  || | | || _|   | |  ")
-        Console.SetCursorPosition(10, 10)
-        Console.WriteLine(" \\___||___||__||_|_|_||___|  |_|  ")
-        Console.SetCursorPosition(10, 11)
-        Console.WriteLine("  ___  _   _  ___  ____         ")
-        Console.SetCursorPosition(10, 12)
-        Console.WriteLine(" / _ \\| | | || __||  _ \\        ")
-        Console.SetCursorPosition(10, 13)
-        Console.WriteLine("| |_| || |_| || _| | |_) |       ")
-        Console.SetCursorPosition(10, 14)
-        Console.WriteLine(" \\___/  \\___/ |___||____/        ")
+        Console.WriteLine("
+       ▄████  ▄▄▄       ███▄ ▄███▓▓█████     ▒█████   ██▒   █▓▓█████  ██▀███  
+      ██▒ ▀█▒▒████▄    ▓██▒▀█▀ ██▒▓█   ▀    ▒██▒  ██▒▓██░   █▒▓█   ▀ ▓██ ▒ ██▒
+     ▒██░▄▄▄░▒██  ▀█▄  ▓██    ▓██░▒███      ▒██░  ██▒ ▓██  █▒░▒███   ▓██ ░▄█ ▒
+     ░▓█  ██▓░██▄▄▄▄██ ▒██    ▒██ ▒▓█  ▄    ▒██   ██░  ▒██ █░░▒▓█  ▄ ▒██▀▀█▄  
+     ░▒▓███▀▒ ▓█   ▓██▒▒██▒   ░██▒░▒████▒   ░ ████▓▒░   ▒▀█░  ░▒████▒░██▓ ▒██▒
+      ░▒   ▒  ▒▒   ▓▒█░░ ▒░   ░  ░░░ ▒░ ░   ░ ▒░▒░▒░    ░ ▐░  ░░ ▒░ ░░ ▒▓ ░▒▓░
+       ░   ░   ▒   ▒▒ ░░  ░      ░ ░ ░  ░     ░ ▒ ▒░    ░ ░░   ░ ░  ░  ░▒ ░ ▒░
+      ░ ░   ░   ░   ▒   ░      ░      ░      ░ ░ ░ ▒       ░░     ░     ░░   ░ 
+         ░       ░  ░       ░      ░  ░       ░ ░        ░     ░  ░   ░     
+                                                     ░                   
+        ")
+
+
+
+
+
+
+
+
+
+
+
 
         Console.ForegroundColor = ConsoleColor.Yellow
-        Console.SetCursorPosition(30, 17)
+        Console.SetCursorPosition(25, 19)
         Console.WriteLine("Dein Score: " & score & " Punkte")
 
         Console.ForegroundColor = ConsoleColor.White
-        Console.SetCursorPosition(25, 19)
+        Console.SetCursorPosition(25, 21)
         Console.WriteLine("[Enter] Weiter zum Menue")
 
         ' Warten bis Enter gedrückt wird
