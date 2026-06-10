@@ -1,4 +1,44 @@
-﻿Module Module1
+﻿
+
+
+Module Module1
+
+
+    ' ANLEITUNG IM SPIEL
+    Sub Zeige_Anleitung()
+        Console.Clear()
+        Console.ForegroundColor = ConsoleColor.Yellow
+
+        Console.SetCursorPosition(2, 2)
+        Console.WriteLine("DOOM - CONSOLE EDITION")
+        Console.SetCursorPosition(2, 4)
+        Console.WriteLine("ZIEL:")
+        Console.WriteLine("Ueberlebe so lange wie moeglich und sammle Punkte.")
+
+        Console.WriteLine()
+        Console.WriteLine("STEUERUNG:")
+        Console.WriteLine("  Pfeil Links/Rechts = Bewegen")
+        Console.WriteLine("  Leertaste          = Schiessen")
+        Console.WriteLine("  Enter              = Auswahl bestaetigen")
+
+        Console.WriteLine()
+        Console.WriteLine("SPIELABLAUF:")
+        Console.WriteLine("- Hindernisse erscheinen oben und bewegen sich nach unten.")
+        Console.WriteLine("- Weiche ihnen aus oder zerstoere sie mit Schuessen.")
+        Console.WriteLine("- Du startest mit 5 Leben und 30 Schuss Munition.")
+        Console.WriteLine("- Pro ueberlebter Runde gibt es 10 Punkte.")
+        Console.WriteLine("- Fuer jedes zerstoerte Hindernis gibt es 25 Punkte.")
+
+        Console.WriteLine()
+        Console.WriteLine("SCHWIERIGKEIT:")
+        Console.WriteLine("- Das Spiel wird mit der Zeit schneller.")
+        Console.WriteLine("- Es erscheinen immer mehr Hindernisse.")
+
+        Console.WriteLine()
+        Console.WriteLine("[Beliebige Taste] Zurueck zum Menue")
+        Tastatur_Abfrage_Blockierend()
+    End Sub
+
 
     '  KONSTANTEN – Tastatur
     Const NO_KEY = 0
@@ -8,7 +48,7 @@
     Const CURSOR_DOWN = 4
     Const KEY_ENTER = 5
     Const KEY_ESCAPE = 6
-    Const KEY_SPACE = 7        ' NEU: Leertaste zum Schießen
+    Const KEY_SPACE = 7
     Const UNKNOWN_KEY = 99
 
     '  KONSTANTEN – Spielfeld
@@ -40,13 +80,13 @@
     ' Maximale gleichzeitige Schüsse
     Const MAX_SCHUESSE = 3
 
-    ' Ammo (Munition) pro Spiel – wird nicht regeneriert, aber Schüsse kosten 1
+    ' Ammo (Munition) pro Spiel
     Const AMMO_START = 30
 
     ' Punkte für abgeschossenes Hindernis
     Const PUNKTE_ABSCHUSS = 25
 
-    '  KONSTANTEN – Hindernisse (Doom-Stil)
+    '  KONSTANTEN – Hindernisse
     Const HINDERNIS_ZEICHEN As Char = "W"c
 
     '  KONSTANTEN – Highscore-Datei
@@ -189,7 +229,7 @@
             eintraege(anzahl - 1).Punkte = neuerScore
         End If
 
-        ' ---- Liste absteigend sortieren (Bubble-Sort) ----
+        ' ---- Liste absteigend sortieren ----
         Dim getauscht As Boolean
         Do
             getauscht = False
@@ -264,7 +304,11 @@
 
     ' FUNKTION: Zeige_Hauptmenue
     ' Navigation mit ↑/↓, Auswahl mit Enter.
-    ' Rückgabe: 1 = Spielen, 2 = Highscores, 3 = Beenden
+    ' Rückgabe:
+    ' 1 = Spielen
+    ' 2 = Highscores
+    ' 3 = Anleitung
+    ' 4 = Beenden
     Function Zeige_Hauptmenue() As Integer
         Dim auswahl As Integer = 1
         Dim taste As Integer
@@ -296,6 +340,7 @@
             ' ---- Menüpunkte ----
             Dim menuePunkte() As String = {"  Spielen starten  ",
                                            "  Hall of Doom     ",
+                                           "  Anleitung        ",
                                            "  Beenden          "}
 
             For i As Integer = 0 To menuePunkte.Length - 1
@@ -459,17 +504,17 @@
     Sub Zeichne_Spieler(ByVal spalte As Integer)
         Console.ForegroundColor = ConsoleColor.Green
 
-        ' Linkes Teil (nur wenn nicht am Rand)
+        ' Linkes Teil 
         If spalte - 1 >= 0 Then
             Console.SetCursorPosition(spalte - 1, SPIELER_ZEILE)
             Console.Write(PLAYER_LINKS)
         End If
 
-        ' Mittelteil (Kanone)
+        ' Mittelteil (Waffe)
         Console.SetCursorPosition(spalte, SPIELER_ZEILE)
         Console.Write(PLAYER_MITTE)
 
-        ' Rechtes Teil (nur wenn nicht am Rand)
+        ' Rechtes Teil 
         If spalte + 1 <= SPALTE_MAX Then
             Console.SetCursorPosition(spalte + 1, SPIELER_ZEILE)
             Console.Write(PLAYER_RECHTS)
@@ -583,10 +628,10 @@
         Dim score As Integer = 0
         Dim ammo As Integer = AMMO_START
         Dim spielfigur_spalte As Integer = SPALTE_MAX \ 2   ' Startposition in der Mitte
-        Dim wartezeit As Single = 200.0   ' Millisekunden pro Bewegungs-Tick (sinkt mit der Zeit)
-        Dim a_max As Single = A_MAX_START ' Maximale Hindernisgruppen pro Zeile (steigt mit der Zeit)
+        Dim wartezeit As Single = 200.0
+        Dim a_max As Single = A_MAX_START
 
-        ' Spielfeld als 2D-Array (Zeilen x Spalten)
+        ' Spielfeld als 2D (Zeilen x Spalten)
         Dim spielfeld(ZEILE_MAX, SPALTE_MAX) As Char
         Dim neueZeile(SPALTE_MAX) As Char
 
@@ -758,6 +803,10 @@
                     Zeige_Highscores()
 
                 Case 3
+                    ' Anleitung anzeigen
+                    Zeige_Anleitung()
+
+                Case 4
                     ' Spiel beenden
                     laeuft = False
             End Select
