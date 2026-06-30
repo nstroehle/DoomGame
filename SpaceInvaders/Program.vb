@@ -183,7 +183,7 @@ Module Module1
         End Try
     End Sub
 
-    ' SUB: Pruefe_Highscore
+    ' SUB: Pruefe_Highscore <-Bei der Entwicklung der Highscore-Verwaltung wurde ChatGPT zur Unterstützung bei der Umsetzung der Sortierlogik und der Dateiverarbeitung genutzt. Die vorgeschlagenen Ansätze wurden anschließend eigenständig angepasst, getestet und in das Gesamtsystem integriert.
     ' Wird nach Spielende aufgerufen.
     ' Wenn der Score in die Top 5 gehört → Name eingeben → sortieren → speichern.
     Sub Pruefe_Highscore(ByVal neuerScore As Integer)
@@ -202,7 +202,7 @@ Module Module1
 
         If Not istInTop5 Then Return   ' Nicht in Top 5 → nichts tun
 
-        ' ---- Name eingeben ----
+        ' Name eingeben
         Console.Clear()
         Console.ForegroundColor = ConsoleColor.Yellow
         Console.SetCursorPosition(20, 10)
@@ -217,7 +217,7 @@ Module Module1
         If spielerName.Trim() = "" Then spielerName = "Marine"
         If spielerName.Length > 10 Then spielerName = spielerName.Substring(0, 10)
 
-        ' ---- Eintrag in Liste aufnehmen ----
+        ' Eintrag in Liste aufnehmen
         If anzahl < HIGHSCORE_MAX Then
             ' Liste noch nicht voll → hinten anhängen
             eintraege(anzahl).Name = spielerName
@@ -229,7 +229,7 @@ Module Module1
             eintraege(anzahl - 1).Punkte = neuerScore
         End If
 
-        ' ---- Liste absteigend sortieren ----
+        ' Liste absteigend sortieren
         Dim getauscht As Boolean
         Do
             getauscht = False
@@ -243,7 +243,7 @@ Module Module1
             Next
         Loop While getauscht
 
-        ' ---- Speichern ----
+        ' Speichern
         Speichere_Highscores(eintraege, anzahl)
     End Sub
 
@@ -319,7 +319,7 @@ Module Module1
             Console.BackgroundColor = ConsoleColor.Black
             Console.ForegroundColor = ConsoleColor.DarkRed
 
-            ' ---- ASCII-Art Titel (Doom-Stil) ----
+            ' ASCII-Art Titel (Doom-Stil)
             Console.SetCursorPosition(5, 1)
             Console.WriteLine("  
      ▓█████▄  ▒█████   ▒█████   ███▄ ▄███▓
@@ -337,7 +337,7 @@ Module Module1
             Console.SetCursorPosition(5, 12)
             Console.WriteLine(" -- CONSOLE EDITION --  Einzelspieler")
 
-            ' ---- Menüpunkte ----
+            ' Menüpunkte
             Dim menuePunkte() As String = {"  Spielen starten  ",
                                            "  Hall of Doom     ",
                                            "  Anleitung        ",
@@ -362,7 +362,7 @@ Module Module1
             Console.SetCursorPosition(20, 22)
             Console.WriteLine("[Pfeiltasten] Navigieren   [Enter] Auswaehlen")
 
-            ' ---- Tasteneingabe ----
+            ' Tasteneingabe
             taste = Tastatur_Abfrage_Blockierend()
 
             Select Case taste
@@ -466,7 +466,7 @@ Module Module1
                     Continue For
                 End If
 
-                ' ---- Kollisionsprüfung ----
+                ' Kollisionsprüfung
                 ' Trifft der Schuss an seiner neuen Position ein Hindernis?
                 If spielfeld(schuesse(i).Zeile, schuesse(i).Spalte) = HINDERNIS_ZEICHEN Then
                     ' Treffer! Hindernis im Spielfeld löschen
@@ -623,7 +623,7 @@ Module Module1
     '   7. Schwierigkeit steigern
     Sub Spielablauf()
 
-        ' ---- Spielvariablen initialisieren ----
+        ' Spielvariablen initialisieren
         Dim leben As Integer = 5
         Dim score As Integer = 0
         Dim ammo As Integer = AMMO_START
@@ -711,7 +711,7 @@ Module Module1
                     If spielfigur_spalte > SPALTE_MAX - 1 Then spielfigur_spalte = SPALTE_MAX - 1
                 End If
 
-                ' ---- Schuss abfeuern (Leertaste) ----
+                ' Schuss abfeuern (Leertaste) <- KI: Bei der Entwicklung der Funktion Aktualisiere_Schuesse() wurde ChatGPT zur Unterstützung bei der Logik für die Schussbewegung, Kollisionsprüfung und Punktevergabe genutzt. Die Funktion wurde anschließend eigenständig angepasst, getestet und in das Gesamtsystem integriert.
                 If taste = KEY_SPACE Then
                     If ammo > 0 Then
                         Dim abgefeuert As Boolean = Feuere_Schuss(schuesse, spielfigur_spalte)
@@ -721,13 +721,13 @@ Module Module1
                     End If
                 End If
 
-                ' ---- Schüsse aktualisieren (Bewegung + Kollision) ----
+                ' Schüsse aktualisieren (Bewegung + Kollision) 
                 Aktualisiere_Schuesse(schuesse, spielfeld, score)
 
-                ' ---- Spieler-Model an neuer Position zeichnen ----
+                ' Spieler-Model an neuer Position zeichnen
                 Zeichne_Spieler(spielfigur_spalte)
 
-                ' ---- Kollision: Spieler <-> Hindernis ----
+                ' Kollision: Spieler <-> Hindernis
                 ' Geprüft wird Zeile 22 (direkt über der Spielerzeile)
                 ' Treffer auf alle 3 Teile des Models prüfen
                 Dim getroffen As Boolean = False
@@ -750,7 +750,7 @@ Module Module1
                     If spielfigur_spalte + 1 <= SPALTE_MAX Then spielfeld(SPIELER_ZEILE - 2, spielfigur_spalte + 1) = " "c
                 End If
 
-                ' ---- HUD aktualisieren ----
+                ' HUD aktualisieren
                 Zeichne_HUD(leben, score, ammo)
 
                 ' Kurze Pause pro Tick (Gesamtwartezeit aufgeteilt)
@@ -771,7 +771,7 @@ Module Module1
 
         Loop Until leben <= 0   ' Schleife endet wenn alle Leben aufgebraucht
 
-        ' ---- Spielende ----
+        ' Spielende
         Game_Over(score)
         Pruefe_Highscore(score)
     End Sub
